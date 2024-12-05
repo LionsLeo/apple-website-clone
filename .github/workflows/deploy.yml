@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Triggers the workflow on pushes to the main branch
+      - main
 
 jobs:
   build-deploy:
@@ -16,17 +16,18 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
-          node-version: 20.10  # Use the Node.js version compatible with your project
+          node-version: 16
 
       - name: Install dependencies
-        run: npm ci  # Use npm ci for clean install
+        run: npm ci
 
       - name: Build the project
-        run: npm run build  # Assumes 'build' script is defined in package.json
+        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
-          publish_dir: ./dist  # Directory with the build output
-          publish_branch: gh-pages  # Branch to which the site is deployed
+          personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          destination_dir: .  # Ensure you're pushing to the root directory
